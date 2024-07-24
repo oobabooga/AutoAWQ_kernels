@@ -124,6 +124,7 @@ jobs:
         with:
           upload_url: ${{ needs.release.outputs.upload_url }}
           asset_path: ./dist/*.whl
+          overwrite: true
 
   build_rocm_wheels:
     name: Build AWQ with ROCm

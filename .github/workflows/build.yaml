@@ -192,12 +192,10 @@ jobs:
           python --version
           which python
 
-          if [[ "${{ matrix.rocm }}" == "5.4.2" ]]; then
-            export ROCM_DL_FILE=amdgpu-install_5.4.50402-1_all.deb
-          elif [[ "${{ matrix.rocm }}" == "5.6.1" ]]; then
-            export ROCM_DL_FILE=amdgpu-install_5.6.50601-1_all.deb
-          elif [[ "${{ matrix.rocm }}" == "5.7.1" ]]; then
+          if [[ "${{ matrix.rocm }}" == "5.7.1" ]]; then
             export ROCM_DL_FILE=amdgpu-install_5.7.50701-1_all.deb
+          elif [[ "${{ matrix.rocm }}" == "6.1.2" ]]; then
+            export ROCM_DL_FILE=amdgpu-install_6.1.60102-1_all.deb
           else
             echo Unknown rocm version
             exit 1
@@ -216,8 +214,8 @@ jobs:
 
           if [[ "${{ matrix.rocm }}" == "5.7.1" ]]; then
             python -m pip install torch==2.4.1 --index-url https://download.pytorch.org/whl/rocm5.7
-          elif [[ "${{ matrix.rocm }}" == "5.6.1" ]]; then
-            python -m pip install torch==2.4.1 --index-url https://download.pytorch.org/whl/rocm5.6
+          elif [[ "${{ matrix.rocm }}" == "6.1.2" ]]; then
+            python -m pip install torch==2.4.1 --index-url https://download.pytorch.org/whl/rocm6.1
           else
             echo Unknown rocm version for python install
             exit 1

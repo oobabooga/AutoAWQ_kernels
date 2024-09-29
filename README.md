@@ -10,33 +10,38 @@ AutoAWQ Kernels is a new package that is split up from the [main repository](htt
   - GPU: Must be compute capability 7.5 or higher.
   - CUDA Toolkit: Must be 11.8 or higher.
 - AMD:
-  - ROCm: Must be 5.6 or higher.
+  - ROCm: Must be 5.6 or higher. [Build from source](#build-from-source)
 
 ## Install
 
 ### Install from PyPi
 
-The package is available on PyPi with CUDA 12.1.1 wheels:
+The package is available on PyPi with CUDA 12.4.1 wheels:
 
 ```
 pip install autoawq-kernels
 ```
 
-### Install release wheels
-
-For ROCm and other CUDA versions, you can use the wheels published at each [release](https://github.com/casper-hansen/AutoAWQ_kernels/releases/):
-
-```
-pip install https://github.com/casper-hansen/AutoAWQ_kernels/releases/download/v0.0.2/autoawq_kernels-0.0.2+rocm561-cp310-cp310-linux_x86_64.whl
-```
-
 ### Build from source
-You can also build from source:
+
+To build the kernels from source, you first need to setup an environment containing the necessary dependencies.
+
+#### Build Requirements
+
+- Python>=3.8.0
+- Numpy
+- Wheel
+- PyTorch
+- ROCm: You need to install the following packages `rocsparse-dev hipsparse-dev rocthrust-dev rocblas-dev hipblas-dev`.
+
+#### Building process
 
 ```
-git clone https://github.com/casper-hansen/AutoAWQ_kernels
-cd AutoAWQ_kernels
-pip install -e .
+pip install git+https://github.com/casper-hansen/AutoAWQ_kernels.git
 ```
 
-To build for ROCm, you need to first install the following packages `rocsparse-dev hipsparse-dev rocthrust-dev rocblas-dev hipblas-dev`.
+Notes on environment variables:
+- `TORCH_VERSION`: By default, we build using the current version of torch by `torch.__version__`. You can override it with `TORCH_VERSION`.
+    - `CUDA_VERSION` or `ROCM_VERSION` can also be used to build for a specific version of CUDA or ROCm.
+- `CC` and `CXX`: You can specify which build system to use for the C code, e.g. `CC=g++-13 CXX=g++-13 pip install -e .`
+- `COMPUTE_CAPABILITIES`: You can specify specific compute capabilities to compile for: `COMPUTE_CAPABILITIES="75,80,86,87,89,90" pip install -e .`
